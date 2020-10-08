@@ -42,6 +42,13 @@ appliance_data = {
         "test_house": 4,
         "validation_house": 17,
     },
+    'freezer': {
+        'mean': 50,
+        'std': 13,
+        'houses': [7, 7, 8],
+        'channels': [2, 3, 3],
+
+    },
 }
 
 # The std and mean values for normalising the mains data which are used
