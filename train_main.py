@@ -33,7 +33,7 @@ def do1(ind):
     global n_app
     global arguments
 
-    file_directory = "./__data/exm" + '/'.join([str(ind), n_app, n_app])
+    file_directory = "./__data__/exm" + '/'.join([str(ind), n_app, n_app])
     training_directory = file_directory + "_training_.csv"
     validation_directory = file_directory + "_valid_.csv"
 

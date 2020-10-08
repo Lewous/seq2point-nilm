@@ -35,10 +35,10 @@ def do1(ind):
     global n_app
     global arguments
 
-    file_directory = "./__data/exm" + '/'.join([str(ind), n_app, n_app])
+    file_directory = "./__data__/exm" + '/'.join([str(ind), n_app, n_app])
 
     # You need to input your test data directory
-    test_directory = file_directory + "_test_S" + str(ind+1) + ".csv"
+    test_directory = file_directory + "_test_.csv"
 
     # You need to provide the trained model
     saved_model_dir = file_directory + "_" + arguments.algorithm + "_model.h5"
