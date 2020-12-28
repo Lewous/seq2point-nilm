@@ -42,12 +42,21 @@ appliance_data = {
         "test_house": 4,
         "validation_house": 17,
     },
-    'freezer': {
-        'mean': 50,
-        'std': 13,
-        'houses': [7, 7, 8],
-        'channels': [2, 3, 3],
-
+    'Freezer(1)': {
+        'mean': 96, 
+        'std': 35,
+    }, 
+    'Fridge': {
+        'mean' : 80, 
+        'std' : 22,
+    },
+    'Washing_Machine': {
+        'mean': 2036, 
+        'std': 83,
+    },
+    'Dishwasher': {
+        'mean': 2145, 
+        'std': 75,
     },
 }
 
