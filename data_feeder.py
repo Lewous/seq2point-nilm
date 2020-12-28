@@ -160,6 +160,7 @@ class TestSlidingWindowGenerator(object):
         self.__inputs = inputs
         self.__targets = targets
         self.total_size = len(inputs)
+        print('\n==== total_size is ' + str(self.total_size))
 
     def load_dataset(self):
 
@@ -177,8 +178,13 @@ class TestSlidingWindowGenerator(object):
             self.__number_of_windows = max_number_of_windows
 
         indicies = np.arange(max_number_of_windows, dtype=int)
+        k = True
+        print(f'{(max_number_of_windows, self.__number_of_windows)=}')
         for start_index in range(0, max_number_of_windows, self.__number_of_windows):
             splice = indicies[start_index : start_index + self.__number_of_windows]
             input_data = np.array([self.__inputs[index : index + 2 * self.__offset + 1] for index in splice])
             target_data = self.__targets[splice + self.__offset].reshape(-1, 1)
+            if k:
+                print(f'{(input_data.size, target_data.size)=}')
+                k = False
             yield input_data, target_data
