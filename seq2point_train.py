@@ -118,6 +118,7 @@ class Trainer():
                    self.__appliance, self.__save_model_dir)
 
         self.plot_training_results(training_history)
+        return training_history
 
     def default_train(self, model, callbacks, steps_per_training_epoch):
 

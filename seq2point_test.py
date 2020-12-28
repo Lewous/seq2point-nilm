@@ -33,12 +33,12 @@ class Tester():
         self.__algorithm = algorithm
         self.__network_type = network_type
 
-        self.__crop = crop
-        self.__batch_size = batch_size
-        self._input_window_length = input_window_length
-        self.__window_size = self._input_window_length + 2
-        self.__window_offset = int(0.5 * self.__window_size - 1)
-        self.__number_of_windows = 100
+        self.__crop = crop      # total length
+        self.__batch_size = batch_size      # quantity in one caculate
+        self._input_window_length = input_window_length             # 599
+        self.__window_size = self._input_window_length + 2          # 601
+        self.__window_offset = int(0.5 * self.__window_size - 1)    # 299
+        self.__number_of_windows = 120
 
         self.__test_directory = test_directory
         self.__saved_model_dir = saved_model_dir
@@ -60,19 +60,19 @@ class Tester():
 
         # Calculate the optimum steps per epoch.
         steps_per_test_epoch = np.round(int(test_generator.total_size / self.__batch_size), decimals=0)
-
+        print(f'{steps_per_test_epoch=}')
         # Test the model.
         start_time = time.time()
         testing_history = model.predict(x=test_generator.load_dataset(), steps=steps_per_test_epoch, verbose=2)
-
+        print(f'{testing_history.size=}')
         end_time = time.time()
         test_time = end_time - start_time
 
         evaluation_metrics = model.evaluate(x=test_generator.load_dataset(), steps=steps_per_test_epoch)
-
+        print(f'{evaluation_metrics=}')
         self.log_results(model, test_time, evaluation_metrics)
-        self.plot_results(testing_history, test_input, test_target)
-
+        a, b = self.plot_results(testing_history, test_input, test_target)
+        return a, b
 
     def load_dataset(self, directory):
         """Loads the testing dataset from the location specified by file_name.
@@ -176,11 +176,13 @@ class Tester():
         test_target (numpy.ndarray): The true energy values of the appliance.
 
         """
+        # print(f'{testing_history.size=}')
 
         testing_history = ((testing_history * appliance_data[self.__appliance]["std"]) + appliance_data[self.__appliance]["mean"])
         test_target = ((test_target * appliance_data[self.__appliance]["std"]) + appliance_data[self.__appliance]["mean"])
         test_agg = (test_input.flatten() * mains_data["std"]) + mains_data["mean"]
         test_agg = test_agg[:testing_history.size]
+        # print(f'{testing_history.size=}')
 
         # Can't have negative energy readings - set any results below 0 to 0.
         test_target[test_target < 0] = 0
@@ -201,3 +203,4 @@ class Tester():
         #plt.savefig(fname=file_path)
 
         plt.show()
+        return testing_history, test_target
